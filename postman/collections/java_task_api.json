@@ -1,0 +1,452 @@
+{
+	"info": {
+		"_postman_id": "f5803867-3084-414c-822f-8ea63c0ff7a0",
+		"name": "java_task_api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "23374857-f5803867-3084-414c-822f-8ea63c0ff7a0"
+	},
+	"item": [
+		{
+			"name": "Tasks",
+			"item": [
+				{
+					"name": "get all tasks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e016f75c-54ee-4e14-9391-91c68cbf4bb8",
+								"exec": [
+									"pm.test(\"has 200 status code\", () => {",
+									"    pm.expect(pm.response.code).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "128a9fc7-e9a7-4302-9366-77f8a70d1352",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}:{{port}}/tasks",
+							"host": [
+								"{{base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add a new task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d191834d-5704-4325-83c6-7b5209c2d015",
+								"exec": [
+									"const id = pm.response.json().id;",
+									"pm.variables.set(\"task_id\", id);",
+									"",
+									"pm.test(\"has 200 status code\", () => {",
+									"    pm.expect(pm.response.code).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "36300faa-d163-4af8-b1ff-234d5c06ee7d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"do new stuff\",\n    \"category\": \"basic\",\n    \"dueDate\": \"2022-09-27\",\n    \"startDate\": \"2022-09-26\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}:{{port}}/tasks",
+							"host": [
+								"{{base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find a task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ef4bc5fa-eb46-4d6a-85ec-e724782a1d5c",
+								"exec": [
+									"pm.test(\"has 200 status code\", () => {",
+									"    pm.expect(pm.response.code).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "75ad9111-5fda-4e63-b56a-0e46422fa0f0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}:{{port}}/tasks/{{task_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"tasks",
+								"{{task_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update the given task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "349c6fa8-d428-404d-9b07-7777a71f9327",
+								"exec": [
+									"const curr_id = pm.response.json().id;",
+									"const task_id = pm.variables.get(\"task_id\");",
+									"",
+									"pm.test(\"id's should match\", () => {",
+									"    pm.expect(curr_id === task_id);",
+									"});",
+									"",
+									"pm.test(\"has 200 status code\", () => {",
+									"    pm.expect(pm.response.code).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "dddb6ec3-4dc9-4170-83c8-be33ff1a11d7",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n        \"id\": {{task_id}},\n        \"name\": \"this should affect the latest task\",\n        \"startDate\": \"2022-09-26T00:00:00.000+00:00\",\n        \"dueDate\": \"2022-09-27T00:00:00.000+00:00\",\n        \"category\": \"advanced\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}:{{port}}/tasks",
+							"host": [
+								"{{base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get task after update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1d4cb0d5-adc8-4704-833a-de040ab14856",
+								"exec": [
+									"pm.test(\"has 200 status code\", () => {",
+									"    pm.expect(pm.response.code).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "cf1dbf05-5832-47e7-809f-ef45b2b6da43",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}:{{port}}/tasks/{{task_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"tasks",
+								"{{task_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete the newly-made task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0543a0aa-3b9e-4757-9c2a-b7475d7dafca",
+								"exec": [
+									"pm.test(\"has 200 status code\", () => {",
+									"    pm.expect(pm.response.code).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "1196cc34-bfb6-41a6-bbe5-f6c2d73539d5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}:{{port}}/tasks/{{task_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"tasks",
+								"{{task_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "b600d98f-c066-4e3b-a9ef-da110d9623bb"
+		},
+		{
+			"name": "Response-Specific Tasks",
+			"item": [
+				{
+					"name": "localhost:8080/tasks",
+					"id": "65b9a400-715c-42c9-b26c-0a70c8ceb2b7",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/tasks",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/tasks/res",
+					"id": "4f8b03c0-69a4-4055-9e58-617ff298705e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"do even more new response stuff\",\n    \"category\": \"advanced\",\n    \"dueDate\": \"2022-09-27\",\n    \"startDate\": \"2022-09-26\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/tasks/res",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tasks",
+								"res"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/tasks/2",
+					"id": "e8fd8565-a245-4f11-a8e0-d57b99565b3b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/tasks/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tasks",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/tasks",
+					"id": "eabe430a-b250-4de5-9e79-02f37e4cab9d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n        \"id\": 3,\n        \"name\": \"do more stuff\",\n        \"startDate\": \"2022-09-26T00:00:00.000+00:00\",\n        \"dueDate\": \"2022-09-27T00:00:00.000+00:00\",\n        \"category\": \"advanced\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/tasks",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/tasks/2 after put",
+					"id": "124f5632-a4dd-4c0c-bf53-9ed78541d788",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/tasks/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tasks",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/tasks/2",
+					"id": "69119f2a-48ff-4973-9d43-24c6046bfb4b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/tasks/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tasks",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "ad5fd230-4916-4f58-929d-307efb0c885f"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "a68dbcd4-1479-4598-b2bc-a4cfd909e180",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "996c261f-9365-40ab-92af-bca3a1e74cef",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "539983e7-5839-4d06-884a-48f8ad9385ca",
+			"key": "base_url",
+			"value": "localhost:8082",
+			"type": "string"
+		},
+		{
+			"id": "738c2a4d-c1ee-4bb2-9676-f1d661df9600",
+			"key": "task_id",
+			"value": ""
+		}
+	]
+}
