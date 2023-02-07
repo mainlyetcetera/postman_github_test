@@ -13,3 +13,4 @@ files[] = {"id":"23374857-f5803867-3084-414c-822f-8ea63c0ff7a0","path":"java_tas
 rootDirectory = postman/schemas
 
 [relations.apiDefinition.metaData]
+type = openapi:3
