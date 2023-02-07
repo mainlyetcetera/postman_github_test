@@ -103,7 +103,9 @@
 								"exec": [
 									"pm.test(\"has 200 status code\", () => {",
 									"    pm.expect(pm.response.code).to.eql(200);",
-									"});"
+									"});",
+									"",
+									"console.log(\"I'm being added to show how a PR works\");"
 								],
 								"type": "text/javascript"
 							}
