@@ -46,6 +46,42 @@
 					"response": []
 				},
 				{
+					"name": "get all tasks again",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e016f75c-54ee-4e14-9391-91c68cbf4bb8",
+								"exec": [
+									"pm.test(\"has 200 status code\", () => {",
+									"    pm.expect(pm.response.code).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "7a79f190-8f57-4e46-85ff-c88dd85cd6fe",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}:{{port}}/tasks",
+							"host": [
+								"{{base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "add a new task",
 					"event": [
 						{
